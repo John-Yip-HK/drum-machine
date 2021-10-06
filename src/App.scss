@@ -1,11 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;700&display=swap");
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
 
-.container-fluid {
-  max-width: 70%;
-  margin: 0 auto;
-  border: 1px solid $blue;
-  border-radius: 5px;
-  background: $yellow-100;
+#outer-container {
+  font-family: "Titillium Web", sans-serif;
+  height: 100vh;
+  padding: 0;
+  display: flex;
+  align-items: center;
+
+  #drum-machine {
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid $blue;
+    border-radius: 5px;
+    background: $yellow-100;
+
+    .drum-pad {
+      text-align: center;
+    }
+  }
 }
