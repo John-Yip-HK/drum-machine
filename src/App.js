@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col, Table } from "react-bootstrap";
+import { Container, Row, Col, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
 
@@ -8,63 +8,46 @@ function App() {
     <Container fluid id="outer-container">
       <Container id="drum-machine">
         <Row>
-          <Col>Power Switch</Col>
           <Col id="display">Display</Col>
-          <Col>Bank Switch</Col>
         </Row>
         <Row>
-          <Col>Volume Knob</Col>
+          <Col>
+            <>
+              <Form.Switch />
+              <Form.Label>Power</Form.Label>
+            </>
+          </Col>
+          <Col>
+            <>
+              <Form.Range />
+              <Form.Label>Volume</Form.Label>
+            </>
+          </Col>
+          <Col>
+            <>
+              <Form.Switch />
+              <Form.Label>Bank</Form.Label>
+            </>
+          </Col>
         </Row>
-        <Row id="drum-pads">
-          <Table bordered>
-            <tbody>
-              <tr>
-                <td class="drum-pad">
-                  Q
-                  <audio
-                    id="Q"
-                    src="https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3"
-                  />
-                </td>
-                <td class="drum-pad">
-                  W
-                  <audio id="W" src="" />
-                </td>
-                <td class="drum-pad">
-                  E
-                  <audio id="E" src="" />
-                </td>
-              </tr>
-              <tr>
-                <td class="drum-pad">
-                  A
-                  <audio id="A" src="" />
-                </td>
-                <td class="drum-pad">
-                  S
-                  <audio id="S" src="" />
-                </td>
-                <td class="drum-pad">
-                  D
-                  <audio id="D" src="" />
-                </td>
-              </tr>
-              <tr>
-                <td class="drum-pad">
-                  Z
-                  <audio id="Z" src="" />
-                </td>
-                <td class="drum-pad">
-                  X
-                  <audio id="X" src="" />
-                </td>
-                <td class="drum-pad">
-                  C
-                  <audio id="C" src="" />
-                </td>
-              </tr>
-            </tbody>
-          </Table>
+        <Row>
+          <Container id="drum-pads">
+            <Row>
+              <Col className="drum-pad">Q</Col>
+              <Col className="drum-pad">W</Col>
+              <Col className="drum-pad">E</Col>
+            </Row>
+            <Row>
+              <Col className="drum-pad">A</Col>
+              <Col className="drum-pad">S</Col>
+              <Col className="drum-pad">D</Col>
+            </Row>
+            <Row>
+              <Col className="drum-pad">Z</Col>
+              <Col className="drum-pad">X</Col>
+              <Col className="drum-pad">C</Col>
+            </Row>
+          </Container>
         </Row>
       </Container>
     </Container>
