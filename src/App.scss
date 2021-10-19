@@ -30,46 +30,28 @@ body {
     #display {
       @include setBlockMargin(1rem, auto);
 
+      padding: 0.5rem 0;
       max-width: 50%;
       background: $black;
     }
 
     .col {
       text-align: center;
-
-      input-knob {
-        width: 150px;
-        padding: 10px;
-        border: 2px dashed green;
-        background: lightgreen;
-      }
-
-      input-knob::part(rotator) {
-        box-sizing: border-box;
-        background: lightblue;
-        border: 2px dashed blue;
-        border-radius: 100%;
-        width: 150px;
-        height: 150px;
-      }
-
-      .mark {
-        display: inline-block;
-        width: 100%;
-        text-align: center;
-        font: bold 200% monospace;
-        color: blue;
-      }
     }
 
     .col.drum-pad {
       @include setBlockMargin(0.1rem, 0.1rem);
 
       text-align: center;
+
+      cursor: pointer;
+
       background: $gray-700;
       color: $white;
+
       border: 0.5px solid $orange-200;
       border-radius: 0.1rem;
+
       padding: 1rem 0.5rem;
     }
 
