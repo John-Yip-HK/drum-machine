@@ -1,28 +1,16 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import { keydownHandler, keyupHandler } from "../custom_scripts/keypadScripts";
 
 class Keypad extends Component {
   componentDidMount() {
-    document.addEventListener("keydown", (event) => {
-      for (let keypad of document.querySelectorAll(".drum-pad")) {
-        if (keypad.innerHTML == event.key.toUpperCase())
-          keypad.style.backgroundColor = "#123456";
-      }
-    });
-
-    document.addEventListener("keyup", () => {
-      for (let keypad of document.querySelectorAll(".drum-pad"))
-        keypad.style.backgroundColor = "#495057";
-    });
+    document.addEventListener("keydown", keydownHandler);
+    document.addEventListener("keyup", keyupHandler);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("keydown", () =>
-      console.log("keydown listener removed.")
-    );
-    document.removeEventListener("keyup", () =>
-      console.log("keyup listener removed.")
-    );
+    document.removeEventListener("keydown", keydownHandler);
+    document.removeEventListener("keyup", keyupHandler);
   }
 
   render() {
