@@ -106,24 +106,31 @@ const audioMap = (function init() {
   return map;
 })();
 
-function playAudio(key) {
-  const audio = new Switcher(audioMap.get(key)[0].link, 10);
-  audio.play();
-}
-
-function tapAndPlay(event) {
-  let key = event.key.toUpperCase();
+function findAudioToPlay(key) {
   for (let keypad of document.querySelectorAll(".drum-pad")) {
     if (keypad.innerHTML === key) {
       keypad.style.backgroundColor = "#123456";
-      playAudio(key);
+      const audio = new Switcher(audioMap.get(key)[0].link, 10);
+      audio.play();
     }
   }
 }
 
-function tapAndReset() {
+function tapAndPlay(event) {
+  findAudioToPlay(event.key.toUpperCase());
+}
+
+function clickAndPlay(event) {
+  findAudioToPlay(event.target.innerHTML);
+}
+
+function keypadReset() {
   for (let keypad of document.querySelectorAll(".drum-pad"))
     keypad.style.backgroundColor = "#495057";
 }
 
-export { tapAndPlay as keydownHandler, tapAndReset as keyupHandler };
+export {
+  tapAndPlay as keydownHandler,
+  keypadReset as keypadUpHandler,
+  clickAndPlay as pointerdownHandler,
+};
