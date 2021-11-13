@@ -1,24 +1,4 @@
-function Channel(audio_url) {
-  this.audio_url = audio_url;
-  this.resource = new Audio(audio_url);
-}
-
-Channel.prototype.play = function () {
-  this.resource.play();
-};
-
-function Switcher(audio_url, num) {
-  this.channels = [];
-  this.num = num;
-  this.index = 0;
-
-  for (let i = 0; i < num; ++i) this.channels.push(new Channel(audio_url));
-}
-
-Switcher.prototype.play = function () {
-  this.channels[this.index++].play();
-  this.index = this.index < this.num ? this.index : 0;
-};
+import appVariables from "./variables";
 
 const audioMap = (function init() {
   const map = new Map();
@@ -101,27 +81,57 @@ const audioMap = (function init() {
   ];
   const keys = ["Q", "W", "E", "A", "S", "D", "Z", "X", "C"];
 
-  keys.forEach((key, id) => map.set(key, [audioLinksOne[id]]));
+  keys.forEach((key, id) =>
+    map.set(key, [audioLinksOne[id], audioLinksTwo[id]])
+  );
 
   return map;
 })();
 
+function Channel(audio_url, audio_volume) {
+  this.audio_url = audio_url;
+  this.resource = new Audio(audio_url);
+  this.resource.volume = audio_volume;
+}
+
+Channel.prototype.play = function () {
+  this.resource.play();
+};
+
+function Switcher(audio_url, audio_volume, num) {
+  this.channels = [];
+  this.num = num;
+  this.index = 0;
+
+  for (let i = 0; i < num; ++i)
+    this.channels.push(new Channel(audio_url, audio_volume));
+}
+
+Switcher.prototype.play = function () {
+  this.channels[this.index++].play();
+  this.index = this.index < this.num ? this.index : 0;
+};
+
 function findAudioToPlay(key) {
+  const display = document.getElementById("display");
+
   for (let keypad of document.querySelectorAll(".drum-pad")) {
     if (keypad.innerHTML === key) {
       keypad.style.backgroundColor = "#123456";
-      const audio = new Switcher(audioMap.get(key)[0].link, 10);
-      audio.play();
+
+      const audioObject = audioMap.get(key)[appVariables.bankNum];
+      display.innerHTML = audioObject.name;
+      new Switcher(audioObject.link, appVariables.volume, 1).play();
     }
   }
 }
 
 function tapAndPlay(event) {
-  findAudioToPlay(event.key.toUpperCase());
+  if (appVariables.powerOn) findAudioToPlay(event.key.toUpperCase());
 }
 
 function clickAndPlay(event) {
-  findAudioToPlay(event.target.innerHTML);
+  if (appVariables.powerOn) findAudioToPlay(event.target.innerHTML);
 }
 
 function keypadReset() {
@@ -131,6 +141,6 @@ function keypadReset() {
 
 export {
   tapAndPlay as keydownHandler,
-  keypadReset as keypadUpHandler,
+  keypadReset as pointerupHandler,
   clickAndPlay as pointerdownHandler,
 };

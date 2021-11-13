@@ -2,23 +2,23 @@ import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import {
   keydownHandler,
-  keypadUpHandler,
+  pointerupHandler,
   pointerdownHandler,
 } from "../custom_scripts/keypadHandlers";
 
 class Keypad extends Component {
   componentDidMount() {
     document.addEventListener("keydown", keydownHandler);
-    document.addEventListener("keyup", keypadUpHandler);
+    document.addEventListener("keyup", pointerupHandler);
     document.addEventListener("pointerdown", pointerdownHandler);
-    document.addEventListener("pointerup", keypadUpHandler);
+    document.addEventListener("pointerup", pointerupHandler);
   }
 
   componentWillUnmount() {
     document.removeEventListener("keydown", keydownHandler);
-    document.removeEventListener("keyup", keypadUpHandler);
+    document.removeEventListener("keyup", pointerupHandler);
     document.removeEventListener("pointerdown", pointerdownHandler);
-    document.addEventListener("pointerup", keypadUpHandler);
+    document.removeEventListener("pointerup", pointerupHandler);
   }
 
   render() {

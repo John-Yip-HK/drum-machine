@@ -5,7 +5,7 @@ const Display = () => {
   return (
     <>
       <Row>
-        <Col id="display">Display</Col>
+        <Col id="display">&nbsp;</Col>
       </Row>
     </>
   );
