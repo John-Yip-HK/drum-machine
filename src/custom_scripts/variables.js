@@ -19,8 +19,11 @@ const appVariables = {
   },
 };
 
-appVariables["setPower"] = appVariables["setPower"].bind(appVariables);
-appVariables["setBankNum"] = appVariables["setBankNum"].bind(appVariables);
-appVariables["setVolume"] = appVariables["setVolume"].bind(appVariables);
+const objToStr = {}.toString;
+
+for (let varName in appVariables) {
+  if (objToStr.call(appVariables[varName]).includes("Function"))
+    appVariables[varName] = appVariables[varName].bind(appVariables);
+}
 
 export default appVariables;

@@ -10,6 +10,7 @@
 body {
   background: $gray-800;
   color: $white;
+  font-size: 20px;
 }
 
 #outer-container {
@@ -27,36 +28,73 @@ body {
     border-radius: 5px;
     background: $orange-700;
 
-    #display {
-      @include setBlockMargin(1rem, auto);
-
-      padding: 0.5rem 0;
-      max-width: 50%;
-      background: $black;
-    }
-
     .col {
       text-align: center;
     }
 
-    .col.drum-pad {
-      @include setBlockMargin(0.1rem, 0.1rem);
+    #disp-ctrl {
+      @include setBlockMargin(0, 0.5rem);
 
-      text-align: center;
+      #display {
+        @include setBlockMargin(1rem, auto);
 
-      cursor: pointer;
-
-      background: $gray-700;
-      color: $white;
-
-      border: 0.5px solid $orange-200;
-      border-radius: 0.1rem;
-
-      padding: 1rem 0.5rem;
+        padding: 0.5rem 0;
+        max-width: 70%;
+        background: $black;
+      }
     }
 
-    .col.drum-pad:active {
-      background: $gray-600;
+    #keypad {
+      @include setBlockMargin(0, 0.5rem);
+      margin-bottom: 1rem;
+
+      .col.drum-pad {
+        @include setBlockMargin(0.1rem, 0.1rem);
+
+        text-align: center;
+
+        cursor: pointer;
+
+        background: $gray-700;
+        color: $white;
+
+        border: 0.5px solid $orange-200;
+        border-radius: 0.1rem;
+
+        padding: 1rem 0.5rem;
+      }
+
+      .col.drum-pad:active {
+        background: $gray-600;
+      }
     }
+  }
+}
+
+@media only screen and (min-width: 768px),
+  only screen and (min-device-aspect-ratio: 1/1) and (orientation: landscape) {
+  #drum-machine {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+
+    #disp-ctrl {
+      margin-right: 0 !important;
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    #keypad {
+      @include setBlockMargin(0, 0);
+      margin-bottom: 0 !important;
+      grid-column: 1;
+      grid-row: 1;
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  #drum-machine {
+    width: 60%;
   }
 }

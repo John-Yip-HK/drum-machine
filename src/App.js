@@ -1,5 +1,5 @@
 import React from "react";
-import Container from "react-bootstrap/Container";
+import { Container, Row } from "react-bootstrap";
 import Display from "./components/DisplayComponent";
 import Keypad from "./components/KeypadComponent";
 import Controls from "./components/ControlsComponent";
@@ -10,9 +10,17 @@ function App() {
   return (
     <Container fluid id="outer-container">
       <Container id="drum-machine">
-        <Display />
-        <Controls />
-        <Keypad />
+        <Row id="disp-ctrl" key="disp-ctrl">
+          <Container>
+            <Display />
+            <Controls />
+          </Container>
+        </Row>
+        <Row id="keypad" key="keypad">
+          <Container id="drum-pads">
+            <Keypad />
+          </Container>
+        </Row>
       </Container>
     </Container>
   );
