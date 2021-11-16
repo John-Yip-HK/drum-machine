@@ -3,6 +3,40 @@ import appVariables from "./variables";
 const audioMap = (function init() {
   const map = new Map();
 
+  function Channel(audio_url, audio_volume) {
+    this.audio_url = audio_url;
+    this.resource = new Audio(audio_url);
+    this.resource.volume = audio_volume;
+  }
+
+  Channel.prototype.play = function () {
+    this.resource.play();
+  };
+
+  function Switcher(audio_url, audio_volume, num) {
+    this.channels = [];
+    this.num = num;
+    this.index = 0;
+    this.volume = audio_volume;
+
+    for (let i = 0; i < num; ++i)
+      this.channels.push(new Channel(audio_url, audio_volume));
+  }
+
+  Switcher.prototype.play = function (volume) {
+    if (this.volume !== volume)
+      this.channels.forEach((channel) => (channel.resource.volume = volume));
+    this.channels[this.index++].play();
+    this.index = this.index < this.num ? this.index : 0;
+  };
+
+  Switcher.prototype.stop = function () {
+    this.channels.forEach((channel) => {
+      channel.resource.pause();
+      channel.resource.currentTime = 0;
+    });
+  };
+
   const audioLinksOne = [
     {
       name: "Heater 1",
@@ -81,36 +115,21 @@ const audioMap = (function init() {
   ];
   const keys = ["Q", "W", "E", "A", "S", "D", "Z", "X", "C"];
 
-  keys.forEach((key, id) =>
-    map.set(key, [audioLinksOne[id], audioLinksTwo[id]])
-  );
+  keys.forEach((key, id) => {
+    const audioObjects = [audioLinksOne[id], audioLinksTwo[id]];
+    audioObjects.forEach(
+      (audioObj) =>
+        (audioObj["switcher"] = new Switcher(
+          audioObj["link"],
+          appVariables.volume,
+          5
+        ))
+    );
+    map.set(key, audioObjects);
+  });
 
   return map;
 })();
-
-function Channel(audio_url, audio_volume) {
-  this.audio_url = audio_url;
-  this.resource = new Audio(audio_url);
-  this.resource.volume = audio_volume;
-}
-
-Channel.prototype.play = function () {
-  this.resource.play();
-};
-
-function Switcher(audio_url, audio_volume, num) {
-  this.channels = [];
-  this.num = num;
-  this.index = 0;
-
-  for (let i = 0; i < num; ++i)
-    this.channels.push(new Channel(audio_url, audio_volume));
-}
-
-Switcher.prototype.play = function () {
-  this.channels[this.index++].play();
-  this.index = this.index < this.num ? this.index : 0;
-};
 
 function findAudioToPlay(key) {
   const display = document.getElementById("display");
@@ -120,8 +139,19 @@ function findAudioToPlay(key) {
       keypad.style.backgroundColor = "#123456";
 
       const audioObject = audioMap.get(key)[appVariables.bankNum];
-      display.innerHTML = audioObject.name;
-      new Switcher(audioObject.link, appVariables.volume, 1).play();
+      const audioDuration =
+        audioObject["switcher"].channels[0].resource.duration;
+
+      display.innerHTML = audioObject["name"];
+      appVariables.playingSwitcher.push(audioObject["switcher"]);
+      audioObject["switcher"].play(appVariables.volume);
+
+      setTimeout(
+        () => appVariables.playingSwitcher.shift(),
+        audioDuration * 10000
+      );
+
+      break;
     }
   }
 }
@@ -139,8 +169,14 @@ function keypadReset() {
     keypad.style.backgroundColor = "#495057";
 }
 
+function stopAudio() {
+  appVariables.playingSwitcher.forEach((switcher) => switcher.stop());
+  appVariables.playingSwitcher = [];
+}
+
 export {
   tapAndPlay as keydownHandler,
   keypadReset as pointerupHandler,
   clickAndPlay as pointerdownHandler,
+  stopAudio,
 };

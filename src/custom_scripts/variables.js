@@ -2,6 +2,7 @@ const appVariables = {
   bankNum: 0,
   powerOn: true,
   volume: null,
+  playingSwitcher: [],
   setPower() {
     this.powerOn = !this.powerOn;
     if (!this.powerOn) {

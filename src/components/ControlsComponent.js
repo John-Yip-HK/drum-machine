@@ -1,6 +1,7 @@
 import { React, Component } from "react";
 import { Row, Col, Form } from "react-bootstrap";
 import appVariables from "../custom_scripts/variables";
+import { stopAudio } from "../custom_scripts/keypadHandlers";
 
 class Controls extends Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class Controls extends Component {
 
   powerOnChangeHandler() {
     appVariables.setPower();
+    stopAudio();
     this.updatePowerSwitch(appVariables.powerOn);
   }
 
