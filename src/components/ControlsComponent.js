@@ -38,6 +38,7 @@ class Controls extends Component {
           <Col>
             <>
               <Form.Switch
+                className="form-switch-sm form-switch-md"
                 id="power-switch"
                 onChange={this.powerOnChangeHandler}
               />
@@ -47,6 +48,7 @@ class Controls extends Component {
           <Col>
             <>
               <Form.Switch
+                className="form-switch-sm form-switch-md"
                 id="bank-switch"
                 onChange={appVariables.setBankNum}
               />

@@ -5,7 +5,11 @@ const Display = () => {
   return (
     <>
       <Row>
-        <Col id="display">&nbsp;</Col>
+        <Col id="display">
+          <h3>
+            <span id="display-content">&nbsp;</span>
+          </h3>
+        </Col>
       </Row>
     </>
   );

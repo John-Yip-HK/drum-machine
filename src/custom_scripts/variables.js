@@ -6,7 +6,7 @@ const appVariables = {
   setPower() {
     this.powerOn = !this.powerOn;
     if (!this.powerOn) {
-      document.getElementById("display").innerHTML = `&nbsp`;
+      document.getElementById("display-content").innerHTML = `&nbsp`;
       this.setVolume(0.0);
     } else {
       this.setVolume(document.getElementById("volume-range").value);

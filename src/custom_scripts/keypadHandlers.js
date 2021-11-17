@@ -122,7 +122,7 @@ const audioMap = (function init() {
         (audioObj["switcher"] = new Switcher(
           audioObj["link"],
           appVariables.volume,
-          5
+          10
         ))
     );
     map.set(key, audioObjects);
@@ -132,7 +132,7 @@ const audioMap = (function init() {
 })();
 
 function findAudioToPlay(key) {
-  const display = document.getElementById("display");
+  const displayContent = document.getElementById("display-content");
 
   for (let keypad of document.querySelectorAll(".drum-pad")) {
     if (keypad.innerHTML === key) {
@@ -142,7 +142,7 @@ function findAudioToPlay(key) {
       const audioDuration =
         audioObject["switcher"].channels[0].resource.duration;
 
-      display.innerHTML = audioObject["name"];
+      displayContent.innerHTML = audioObject["name"];
       appVariables.playingSwitcher.push(audioObject["switcher"]);
       audioObject["switcher"].play(appVariables.volume);
 
