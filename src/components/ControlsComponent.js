@@ -2,6 +2,7 @@ import { React, Component } from "react";
 import { Row, Col, Form } from "react-bootstrap";
 import appVariables from "../custom_scripts/variables";
 import { stopAudio } from "../custom_scripts/keypadHandlers";
+import { updateDisplay } from "../custom_scripts/controlsHandlers";
 
 class Controls extends Component {
   constructor(props) {
@@ -15,6 +16,9 @@ class Controls extends Component {
   componentDidMount() {
     this.updatePowerSwitch(appVariables.powerOn);
     appVariables.setVolume(document.getElementById("volume-range").value);
+    document
+      .getElementById("volume-range")
+      .addEventListener("pointerup", updateDisplay);
   }
 
   updatePowerSwitch(state) {
@@ -29,6 +33,17 @@ class Controls extends Component {
 
   updateVolume() {
     appVariables.setVolume(document.getElementById("volume-range").value);
+    if (appVariables.powerOn) {
+      document.getElementById("display-content").innerHTML = `Volume: ${
+        document.getElementById("volume-range").value
+      }`;
+    }
+  }
+
+  componentWillUnmount() {
+    document
+      .getElementById("volume-range")
+      .removeEventListener("pointerup", updateDisplay);
   }
 
   render() {

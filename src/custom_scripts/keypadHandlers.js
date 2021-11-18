@@ -17,15 +17,13 @@ const audioMap = (function init() {
     this.channels = [];
     this.num = num;
     this.index = 0;
-    this.volume = audio_volume;
 
     for (let i = 0; i < num; ++i)
       this.channels.push(new Channel(audio_url, audio_volume));
   }
 
   Switcher.prototype.play = function (volume) {
-    if (this.volume !== volume)
-      this.channels.forEach((channel) => (channel.resource.volume = volume));
+    this.channels.forEach((channel) => (channel.resource.volume = volume));
     this.channels[this.index++].play();
     this.index = this.index < this.num ? this.index : 0;
   };
@@ -122,7 +120,7 @@ const audioMap = (function init() {
         (audioObj["switcher"] = new Switcher(
           audioObj["link"],
           appVariables.volume,
-          10
+          audioObj.link.includes("Chord") ? 5 : 10
         ))
     );
     map.set(key, audioObjects);
