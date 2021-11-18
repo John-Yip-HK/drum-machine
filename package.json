@@ -15,6 +15,10 @@
     "sass": "^1.42.1",
     "web-vitals": "^1.0.1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/John-Yip-HK/drum-machine.git"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "BUILD_PATH='./docs' react-scripts build",
